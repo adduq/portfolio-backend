@@ -1,3 +1,12 @@
 # Env
 env
 .env
+
+# Vercel
+.vercel
+
+# VSCode
+.vscode
+
+# Python
+__pycache__/
