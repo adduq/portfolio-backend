@@ -10,3 +10,6 @@ env
 
 # Python
 __pycache__/
+
+# Firebase service account
+serviceAccountKey.json
