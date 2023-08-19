@@ -10,14 +10,17 @@ from dotenv import load_dotenv
 from spotify_watcher import SpotifyWatcher
 from models.contact_form import ContactForm
 from starlette.middleware.cors import CORSMiddleware
+import json
+load_dotenv()
 
 
 # Initialize Firestore DB
-cred = firebase_admin.credentials.Certificate("serviceAccountKey.json")
+cred = firebase_admin.credentials.Certificate(
+    json.loads((os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY")))
+)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-load_dotenv()
 client_id = os.getenv("SPOTIFY_CLIENT_ID")
 client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
 refresh_token = os.getenv("SPOTIFY_REFRESH_TOKEN")
@@ -35,6 +38,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.exception_handler(RequestValidationError)
 async def custom_form_validation_error(request, exc):
@@ -54,17 +58,16 @@ async def custom_form_validation_error(request, exc):
         }
     )
 
+
 @app.get('/')
 def home():
     return JSONResponse(
         status_code=200,
         content={
             'status': 'ok',
-            # Add a fire emoji to the message
             'message': 'aduq.dev backend is up and running.',
         }
     )
-
 
 
 @app.get('/currently-playing')

@@ -33,8 +33,7 @@ class SpotifyWatcher:
 
     def get_currently_playing(self) -> dict:
         if self.last_fetched_at is not None and time.time() - self.last_fetched_at < 5:
-            print("Using cached currently playing")
-            return self.current_track
+            return self.current_track  # return cached track
 
         url = "https://api.spotify.com/v1/me/player/currently-playing"
         headers = {"Authorization": f"Bearer {self.__get_access_token()}"}
@@ -51,6 +50,7 @@ class SpotifyWatcher:
             "image_url": data["item"]["album"]["images"][0]["url"],
             "track_url": data["item"]["external_urls"]["spotify"],
             "artist_url": data["item"]["artists"][0]["external_urls"]["spotify"],
+            "preview_url": data["item"]["preview_url"],
             "duration_ms": data["item"]["duration_ms"],
             "progress_ms": data["progress_ms"],
         }

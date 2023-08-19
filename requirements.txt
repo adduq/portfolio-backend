@@ -1,6 +1,7 @@
-fastapi==0.99.1
-firebase_admin==6.2.0
-pydantic==1.10.7
-python-dotenv==1.0.0
-requests==2.31.0
-starlette==0.28.0
+fastapi
+firebase_admin
+pydantic
+python-dotenv
+requests
+starlette
+email-validator
